@@ -1,0 +1,36 @@
+services:
+
+    elasticsearch:
+      image: elasticsearch:8.7.0
+      container_name: elasticsearch
+      ports:
+        - 9200:9200
+      environment:
+        - discovery.type=single-node
+        - ES_JAVA_OPTS=-Xms1g -Xmx1g
+        - xpack.security.enabled=false
+      volumes:
+        - es_data:/usr/share/elasticsearch/data
+      networks:
+        - elastic_project
+    postgresql:
+      image: postgres:16.1
+      container_name: postgresql
+      environment:
+        POSTGRES_DB: gestdb
+        POSTGRES_USER: admin
+        POSTGRES_PASSWORD: admin123
+        POSTGRES_INITDB_ARGS: "--auth-host=scram-sha-256 --auth-local=scram-sha-256"
+      volumes:
+        - pg_data:/var/lib/postgresql/data
+      ports:
+        - "5432:5432"
+      networks:
+        - elastic_project
+volumes:
+  es_data:
+  pg_data:
+
+networks:
+    elastic_project:
+      external: true
