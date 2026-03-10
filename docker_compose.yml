@@ -17,7 +17,7 @@ services:
       image: postgres:16.1
       container_name: postgresql
       environment:
-        POSTGRES_DB: gestdb
+        POSTGRES_DB: postgre_db
         POSTGRES_USER: admin
         POSTGRES_PASSWORD: admin123
         POSTGRES_INITDB_ARGS: "--auth-host=scram-sha-256 --auth-local=scram-sha-256"
